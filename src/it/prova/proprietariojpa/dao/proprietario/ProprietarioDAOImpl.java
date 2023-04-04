@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import it.prova.proprietariojpa.model.Automobile;
 import it.prova.proprietariojpa.model.Proprietario;
 
 public class ProprietarioDAOImpl implements ProprietarioDAO {
 	
-	
+	private EntityManager entityManager;
 
 	public ProprietarioDAOImpl() {
 		super();
@@ -17,31 +18,46 @@ public class ProprietarioDAOImpl implements ProprietarioDAO {
 
 	@Override
 	public List<Proprietario> list() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return entityManager.createQuery("select from proprietario", Proprietario.class).getResultList();
 	}
 
 	@Override
 	public Proprietario get(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return entityManager.find(Proprietario.class, id);
 	}
 
 	@Override
-	public void update(Proprietario o) throws Exception {
-		// TODO Auto-generated method stub
+	public void update(Proprietario proprietarioInput) throws Exception {
+		
+		if (proprietarioInput == null) {
+
+			throw new Exception("Problema valore in input");
+		}
+
+		entityManager.merge(proprietarioInput);
+
+	}
+
+	
+
+	@Override
+	public void insert(Proprietario proprietarioInput) throws Exception {
+		
+		if (proprietarioInput == null) {
+
+			throw new Exception("Problema valore in input");
+		}
+		
+		entityManager.persist(proprietarioInput);
 
 	}
 
 	@Override
-	public void insert(Proprietario o) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Proprietario o) throws Exception {
-		// TODO Auto-generated method stub
+	public void delete(Proprietario proprietarioInput) throws Exception {
+		
+		
 
 	}
 
