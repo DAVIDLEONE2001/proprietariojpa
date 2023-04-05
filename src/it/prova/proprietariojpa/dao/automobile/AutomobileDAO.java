@@ -9,4 +9,10 @@ public interface AutomobileDAO extends IBaseDAO<Automobile> {
 
 	public List<Automobile> erroreEta();
 	
+	public List<Automobile> propConCoFisc(String cod);
+	
+	public int autoConPropNatoDopo(int anno);
+	
+	
+	
 }

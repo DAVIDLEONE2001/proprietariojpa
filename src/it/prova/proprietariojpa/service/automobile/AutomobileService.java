@@ -20,6 +20,12 @@ public interface AutomobileService {
 	public List<Automobile> OttieniTuttiByErroreEta();
 	
 	public void setAutomobileDAO(AutomobileDAO automobileDAO);
+	
+	public List<Automobile> automobiliConProprietarioConCFCheIniziaPer(String inizialeCF) throws Exception;
+	
+	public int autoConProprietarioNatoDopo(int anno) throws Exception;
+	
+	
 
 
 }

@@ -9,7 +9,7 @@ public interface ProprietarioService {
 
 	public List<Proprietario> listAllProprietario() throws Exception;
 
-	public Proprietario caricaSingolaProprietario(Long id) throws Exception;
+	public Proprietario caricaSingoloProprietario(Long id) throws Exception;
 
 	public void aggiorna(Proprietario proprietarioInstance) throws Exception;
 

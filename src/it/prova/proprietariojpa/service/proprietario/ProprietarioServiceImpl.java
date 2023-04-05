@@ -9,14 +9,12 @@ import it.prova.proprietariojpa.dao.proprietario.ProprietarioDAO;
 import it.prova.proprietariojpa.model.Proprietario;
 
 public class ProprietarioServiceImpl implements ProprietarioService {
-	
+
 	ProprietarioDAO proprietarioDAO;
-	
-	
 
 	@Override
 	public List<Proprietario> listAllProprietario() throws Exception {
-		
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -35,8 +33,8 @@ public class ProprietarioServiceImpl implements ProprietarioService {
 	}
 
 	@Override
-	public Proprietario caricaSingolaProprietario(Long id) throws Exception {
-		
+	public Proprietario caricaSingoloProprietario(Long id) throws Exception {
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -56,17 +54,21 @@ public class ProprietarioServiceImpl implements ProprietarioService {
 
 	@Override
 	public void aggiorna(Proprietario proprietarioInstance) throws Exception {
-		
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			proprietarioDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			proprietarioDAO.update(proprietarioInstance);
 
+			entityManager.getTransaction().commit();
+
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -77,17 +79,21 @@ public class ProprietarioServiceImpl implements ProprietarioService {
 
 	@Override
 	public void inserisciNuovo(Proprietario proprietarioInstance) throws Exception {
-		
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			proprietarioDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			proprietarioDAO.insert(proprietarioInstance);
 
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -98,17 +104,20 @@ public class ProprietarioServiceImpl implements ProprietarioService {
 
 	@Override
 	public void rimuovi(Long idProprietarioInstance) throws Exception {
-		
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			proprietarioDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			proprietarioDAO.delete(proprietarioDAO.get(idProprietarioInstance));
 
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {

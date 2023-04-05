@@ -33,10 +33,11 @@ public class AutomobileServiceImpl implements AutomobileService {
 
 	@Override
 	public Automobile caricaSingolaAutomobile(Long id) throws Exception {
-		
+
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+
 			// uso l'injection per il dao
 			automobileDAO.setEntityManager(entityManager);
 
@@ -57,13 +58,16 @@ public class AutomobileServiceImpl implements AutomobileService {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			automobileDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			automobileDAO.update(automobileInstance);
 
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -78,13 +82,16 @@ public class AutomobileServiceImpl implements AutomobileService {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			automobileDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			automobileDAO.insert(automobileInstance);
 
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -99,13 +106,16 @@ public class AutomobileServiceImpl implements AutomobileService {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
+			entityManager.getTransaction().begin();
 			// uso l'injection per il dao
 			automobileDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
 			automobileDAO.delete(automobileDAO.get(IdAutomobileInstance));
 
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -139,6 +149,45 @@ public class AutomobileServiceImpl implements AutomobileService {
 
 	public void setAutomobileDAO(AutomobileDAO automobileDAO) {
 		this.automobileDAO = automobileDAO;
+	}
+
+	@Override
+	public List<Automobile> automobiliConProprietarioConCFCheIniziaPer(String inizialeCF) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			automobileDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return automobileDAO.propConCoFisc(inizialeCF);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public int autoConProprietarioNatoDopo(int anno) throws Exception {
+		
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			automobileDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return automobileDAO.autoConPropNatoDopo(anno);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 }

@@ -1,17 +1,19 @@
 package it.prova.proprietariojpa.model;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+
+
+@Entity
+@Table(name = "automobile")
 public class Automobile {
 
 	@Id
@@ -24,7 +26,6 @@ public class Automobile {
 	private String modello;
 	@Column(name = "targa")
 	private String targa;
-	@Column(name = "id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proprietario_id")
 	private Proprietario proprietario;

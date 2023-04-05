@@ -5,12 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "proprietario")
 public class Proprietario {
 
 	@Id
@@ -25,8 +29,8 @@ public class Proprietario {
 	private String cf;
 	@Column(name = "dataDiNascita")
 	private LocalDate dataDiNascita;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "automobile")
-	private Set<Automobile> automobile = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proprietario")
+	private Set<Automobile> automobili = new HashSet<>();
 	
 	
 
@@ -53,7 +57,7 @@ public class Proprietario {
 		this.cognome = cognome;
 		this.cf = cf;
 		this.dataDiNascita = dataDiNascita;
-		this.automobile = automobile;
+		this.automobili = automobile;
 	}
 
 
@@ -99,11 +103,14 @@ public class Proprietario {
 	}
 
 	public Set<Automobile> getAutomobile() {
-		return automobile;
+		return automobili;
 	}
 
 	public void setAutomobile(Set<Automobile> automobile) {
-		this.automobile = automobile;
+		this.automobili = automobile;
+	}
+	public void setAutomobile(Automobile automobile) {
+		this.automobili.add(automobile);
 	}
 
 }
